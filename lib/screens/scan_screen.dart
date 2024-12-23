@@ -95,10 +95,13 @@ class _ScanScreenState extends State<ScanScreen> {
         detectionResult = result["prediction"];
 
         // Safely convert probabilities to List<double>
-        probabilities = (result["probabilities"] as List<dynamic>)
-            .map((e) => e.toDouble())
-            .toList()
-            .cast<double>();
+        if (result.containsKey("probabilities") && result["probabilities"] is List) {
+          probabilities = (result["probabilities"] as List<dynamic>)
+              .map((e) => e is num ? e.toDouble() : 0.0)
+              .toList();
+        } else {
+          probabilities = [];
+        }
       });
     } catch (e) {
       setState(() {

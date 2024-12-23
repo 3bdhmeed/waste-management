@@ -34,5 +34,5 @@ flutter:
     - assets/images/new_password.png
     - assets/images/news1.png
     - assets/images/news2.png
-#    - assets/NodesPlaces_DS.xlsx
+    - assets/NodesPlaces_DS.xlsx
     - assets/models/smart_waste_sorting_model.tflite
