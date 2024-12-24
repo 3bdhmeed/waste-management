@@ -41,12 +41,10 @@ class _SplashScreenState extends State<SplashScreen>
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF00C853), Color(0xFFB9F6CA)], // Green gradient
-          ),
-        ),
+            image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage('assets/images/Untitled-1.png'),
+        )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -61,14 +59,36 @@ class _SplashScreenState extends State<SplashScreen>
             ),
             SizedBox(height: 20),
             // App title
-            Text(
-              'RecycLink',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
+            Stack(
+              children: [
+                Text(
+                  'RecycLink',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2.0
+                      ..color = Colors.white,
+                  ),
+                ),
+                Text(
+                  'RecycLink',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF005570),
+                    shadows: [
+                      Shadow(
+                        offset: Offset(2.0, 2.0),
+                        blurRadius: 10.0,
+                        color: const Color.fromARGB(255, 212, 212, 212),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
