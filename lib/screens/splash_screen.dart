@@ -72,21 +72,32 @@ class _SplashScreenState extends State<SplashScreen>
                       ..color = Colors.white,
                   ),
                 ),
-                Text(
-                  'RecycLink',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF005570),
-                    shadows: [
-                      Shadow(
-                        offset: Offset(2.0, 2.0),
-                        blurRadius: 10.0,
-                        color: const Color.fromARGB(255, 212, 212, 212),
+                Stack(
+                  children: [
+                    // Text with a white border
+                    Text(
+                      'RecycLink',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth =
+                              5.0 // Adjust for desired border thickness
+                          ..color = Color(0xFFfffffb), // Border color
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                    // Text with solid fill
+                    Text(
+                      'RecycLink',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF005570), // Text fill color
+                      ),
+                    ),
+                  ],
+                )
               ],
             )
           ],

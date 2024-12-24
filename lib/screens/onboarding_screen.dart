@@ -46,7 +46,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   height: 8,
                   decoration: BoxDecoration(
                     color: _currentPage == index
-                        ? Colors.green
+                        ? Color(0xFF00b298)
                         : Colors.grey.shade400,
                     borderRadius: BorderRadius.circular(4),
                   ),
@@ -77,7 +77,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               // Skip Button
               TextButton(
-                child: Text('Skip'),
+                child: Text(
+                  'Skip',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF005570),
+                  ),
+                ),
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
@@ -106,9 +112,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           );
                         }
                       },
-                      child: Text(_currentPage == onboardingPages.length - 1
-                          ? 'Finish'
-                          : 'Next'),
+                      child: Text(
+                          _currentPage == onboardingPages.length - 1
+                              ? 'Finish'
+                              : 'Next',
+                          style: TextStyle(
+                            color: Color(0xFF005570),
+                            fontWeight: FontWeight.bold,
+                          )),
                     ),
                   ),
                 ],
@@ -130,9 +141,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Text(
           title,
           style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF005570)),
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF005570),
+          ),
         ),
         SizedBox(height: 10),
         Padding(
