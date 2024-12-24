@@ -1,16 +1,41 @@
 import 'package:flutter/material.dart';
 import 'onboarding_screen.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    // Navigate to OnboardingScreen after 3 seconds
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize the animation controller
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..repeat(); // Repeat the animation
+
+    // Navigate to OnboardingScreen after 5 seconds
     Future.delayed(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => OnboardingScreen()),
       );
     });
+  }
 
+  @override
+  void dispose() {
+    _controller.dispose(); // Dispose the controller
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -25,18 +50,21 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // App logo
-            Image.asset(
-              'assets/images/logo.png',
-              width: 100,
-              height: 100,
+            // Rotating app logo
+            RotationTransition(
+              turns: Tween<double>(begin: 0.0, end: 1.0).animate(_controller),
+              child: Image.asset(
+                'assets/images/logo.png',
+                width: 200,
+                height: 200,
+              ),
             ),
             SizedBox(height: 20),
             // App title
             Text(
-              'GreenBin',
+              'RecycLink',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),

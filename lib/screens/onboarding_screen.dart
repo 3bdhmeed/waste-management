@@ -13,9 +13,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<Map<String, String>> onboardingPages = [
     {
-      "title": "Welcome to GreenBin",
+      "title": "Welcome to RecycLink",
       "description": "Together we create a cleaner and greener environment.",
-      "image": "assets/images/logo.png"
+      "image": "assets/images/Layer2.png"
     },
     {
       "title": "Easy Garbage Handover",
@@ -34,6 +34,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       body: Column(
         children: [
+          // Indicator
+          SafeArea(
+            minimum: EdgeInsets.only(top: 60),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(onboardingPages.length, (index) {
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 4.0),
+                  width: _currentPage == index ? 24 : 12,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: _currentPage == index
+                        ? Colors.green
+                        : Colors.grey.shade400,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                );
+              }),
+            ),
+          ),
           Expanded(
             child: PageView.builder(
               controller: _pageController,
@@ -65,41 +85,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   );
                 },
               ),
-              // Indicator and Next Button
+              // Next Button
               Row(
                 children: [
-                  ...List.generate(onboardingPages.length, (index) {
-                    return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 4.0),
-                      width: _currentPage == index ? 12 : 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: _currentPage == index
-                            ? Colors.green
-                            : Colors.grey.shade400,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    );
-                  }),
                   SizedBox(width: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_currentPage == onboardingPages.length - 1) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignUpScreen()),
-                        );
-                      } else {
-                        _pageController.nextPage(
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    },
-                    child: Text(_currentPage == onboardingPages.length - 1
-                        ? 'Finish'
-                        : 'Next'),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_currentPage == onboardingPages.length - 1) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpScreen()),
+                          );
+                        } else {
+                          _pageController.nextPage(
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        }
+                      },
+                      child: Text(_currentPage == onboardingPages.length - 1
+                          ? 'Finish'
+                          : 'Next'),
+                    ),
                   ),
                 ],
               ),
@@ -119,7 +129,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         SizedBox(height: 20),
         Text(
           title,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF005570)),
         ),
         SizedBox(height: 10),
         Padding(
@@ -127,7 +140,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(
+              fontSize: 16,
+            ),
           ),
         ),
       ],
