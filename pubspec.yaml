@@ -38,3 +38,9 @@ flutter:
     - assets/models/smart_waste_sorting_model.tflite
     - assets/images/Layer2.png
     - assets/images/Untitled-1.png
+    - assets/images/Paper.png
+    - assets/images/Plastic.jpg
+    - assets/images/Metal.jpg
+    - assets/images/Cardboard.jpg
+    - assets/images/Glass.jpg
+    - assets/images/Clothes.png

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'location_screen.dart';
 import 'scan_screen.dart';
+import 'product_description_page.dart'; // Import your description page
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,42 +18,48 @@ class _HomeScreenState extends State<HomeScreen> {
       "description": "Recyclable plastic waste.",
       "rating": 4.5,
       "price": 5.0,
-      "isFavorite": false
+      "isFavorite": false,
+      "imageUrl": "assets/images/Plastic.jpg"
     },
     {
       "name": "Metal",
       "description": "Recyclable metal scrap.",
       "rating": 4.7,
       "price": 10.0,
-      "isFavorite": false
+      "isFavorite": false,
+      "imageUrl": "assets/images/Metal.jpg"
     },
     {
       "name": "Paper",
       "description": "Recyclable paper material.",
       "rating": 4.2,
       "price": 3.0,
-      "isFavorite": false
+      "isFavorite": false,
+      "imageUrl": "assets/images/Paper.png"
     },
     {
       "name": "Glass",
       "description": "Recyclable glass material.",
       "rating": 4.8,
       "price": 8.0,
-      "isFavorite": false
+      "isFavorite": false,
+      "imageUrl": "assets/images/Glass.jpg"
     },
     {
       "name": "Cardboard",
       "description": "Recyclable cardboard.",
       "rating": 4.3,
       "price": 4.0,
-      "isFavorite": false
+      "isFavorite": false,
+      "imageUrl": "assets/images/Cardboard.jpg"
     },
     {
       "name": "Clothes",
       "description": "Reusable clothing items.",
       "rating": 4.6,
       "price": 7.0,
-      "isFavorite": false
+      "isFavorite": false,
+      "imageUrl": "assets/images/Clothes.png"
     },
   ];
 
@@ -158,82 +165,100 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: filteredProducts.length,
                     itemBuilder: (context, index) {
                       final product = filteredProducts[index];
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.green.shade100,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Center(
-                                    child: Icon(Icons.recycling,
-                                        color: Colors.green, size: 40),
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductDescriptionPage(
+                                product: product,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.green.shade100,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(
+                                        width: double.infinity,
+                                        product[
+                                            'imageUrl'], // Use Image.network for online images
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                product['name'],
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                product['description'],
-                                style: TextStyle(
-                                    color: Colors.grey.shade600, fontSize: 12),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              SizedBox(height: 8),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "EGP ${product['price']}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                      product['isFavorite']
-                                          ? Icons.favorite
-                                          : Icons.favorite_border,
-                                      color: product['isFavorite']
-                                          ? Colors.red
-                                          : Colors.grey,
+                                SizedBox(height: 8),
+                                Text(
+                                  product['name'],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  product['description'],
+                                  style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                      fontSize: 12),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "EGP ${product['price']}",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        product['isFavorite'] =
-                                            !product['isFavorite'];
-                                      });
-                                    },
-                                    iconSize: 20,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.star,
-                                      color: Colors.yellow, size: 16),
-                                  Text(
-                                    product['rating'].toString(),
-                                    style: const TextStyle(fontSize: 12),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    IconButton(
+                                      icon: Icon(
+                                        product['isFavorite']
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: product['isFavorite']
+                                            ? Colors.red
+                                            : Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          product['isFavorite'] =
+                                              !product['isFavorite'];
+                                        });
+                                      },
+                                      iconSize: 20,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(Icons.star,
+                                        color: Colors.yellow, size: 16),
+                                    Text(
+                                      product['rating'].toString(),
+                                      style: const TextStyle(fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
