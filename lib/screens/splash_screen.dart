@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'onboarding_screen.dart';
+import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -20,12 +22,24 @@ class _SplashScreenState extends State<SplashScreen>
       vsync: this,
     )..repeat(); // Repeat the animation
 
-    // Navigate to OnboardingScreen after 5 seconds
-    Future.delayed(Duration(seconds: 3), () {
+    // Check authentication state after 3 seconds
+    Future.delayed(const Duration(seconds: 3), _checkAuthState);
+  }
+
+  Future<void> _checkAuthState() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // User is authenticated, navigate to HomeScreen
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+    } else {
+      // User is not authenticated, navigate to OnboardingScreen
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => OnboardingScreen()),
       );
-    });
+    }
   }
 
   @override
@@ -41,10 +55,11 @@ class _SplashScreenState extends State<SplashScreen>
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-            image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage('assets/images/Untitled-1.png'),
-        )),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('assets/images/Untitled-1.png'),
+          ),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -57,49 +72,16 @@ class _SplashScreenState extends State<SplashScreen>
                 height: 200,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // App title
-            Stack(
-              children: [
-                Text(
-                  'RecycLink',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    foreground: Paint()
-                      ..style = PaintingStyle.stroke
-                      ..strokeWidth = 2.0
-                      ..color = Colors.white,
-                  ),
-                ),
-                Stack(
-                  children: [
-                    // Text with a white border
-                    Text(
-                      'RecycLink',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        foreground: Paint()
-                          ..style = PaintingStyle.stroke
-                          ..strokeWidth =
-                              5.0 // Adjust for desired border thickness
-                          ..color = Color(0xFFfffffb), // Border color
-                      ),
-                    ),
-                    // Text with solid fill
-                    Text(
-                      'RecycLink',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF005570), // Text fill color
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            )
+            const Text(
+              'RecycLink',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
           ],
         ),
       ),

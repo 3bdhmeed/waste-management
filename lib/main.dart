@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'screens/splash_screen.dart';
+// Firebase packages
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -17,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         fontFamily: 'Roboto',
       ),
-      home: SplashScreen(), // Initial screen
+      home: SplashScreen(),
     );
   }
 }
