@@ -21,6 +21,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   http: ^1.2.2
   flutter_lints: ^5.0.0
+  lottie: ^2.3.0
 #  firebase required packages
   firebase_core: ^2.31.0
   firebase_auth: ^4.19.0
@@ -51,3 +52,4 @@ flutter:
     - assets/images/Cardboard.jpg
     - assets/images/Glass.jpg
     - assets/images/Clothes.png
+    - assets/animations/delivery_moto.json

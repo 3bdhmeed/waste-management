@@ -4,6 +4,7 @@ import 'location_screen.dart';
 import 'login_screen.dart';
 import 'scan_screen.dart';
 import 'product_description_page.dart'; // Import your description page
+import 'shopping_cart_page.dart'; // Import your shopping cart
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final List<Map<String, dynamic>> cartItems = [];
   // List of Products
   final List<Map<String, dynamic>> products = [
     {
@@ -79,21 +81,35 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF00b298),
         elevation: 0,
         title: const Text(
           "Home",
-          style: TextStyle(color: Colors.black, fontSize: 20),
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout, color: Colors.black),
+            icon: const Icon(Icons.menu, color: Colors.black),
+            // Menu actionicon: const Icon(Icons.logout, color: Colors.black),
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const SignInScreen()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_cart, color: Colors.black),
+            onPressed: () {
+              // Navigate to the ShoppingCartPage
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ShoppingCartPage(cartItems: cartItems),
+                ),
               );
             },
           ),
@@ -178,6 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                               builder: (context) => ProductDescriptionPage(
                                 product: product,
+                                cartItems: cartItems,
                               ),
                             ),
                           );
@@ -291,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label: "Location",
           ),
         ],
-        selectedItemColor: Colors.green,
+        selectedItemColor: Color(0xFF00b298),
         unselectedItemColor: Colors.grey,
         onTap: (index) {
           if (index == 1) {

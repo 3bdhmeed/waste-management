@@ -1,34 +1,85 @@
 import 'package:flutter/material.dart';
+import 'shopping_cart_page.dart';
 
-class ProductDescriptionPage extends StatelessWidget {
+class ProductDescriptionPage extends StatefulWidget {
   final Map<String, dynamic> product;
+  final List<Map<String, dynamic>> cartItems;
 
-  const ProductDescriptionPage({super.key, required this.product});
+  // Default Constructor
+  const ProductDescriptionPage({
+    super.key,
+    required this.product,
+    required this.cartItems,
+  });
+
+  // Named Constructor
+  ProductDescriptionPage.simple({
+    super.key,
+    required this.product,
+  }) : cartItems = [];
+
+  @override
+  _ProductDescriptionPageState createState() => _ProductDescriptionPageState();
+}
+
+class _ProductDescriptionPageState extends State<ProductDescriptionPage> {
+  int quantity = 1;
+
+  void addToCart() {
+    final existingItemIndex = widget.cartItems
+        .indexWhere((item) => item['name'] == widget.product['name']);
+
+    if (existingItemIndex != -1) {
+      widget.cartItems[existingItemIndex]['quantity'] += quantity;
+    } else {
+      widget.cartItems.add({
+        ...widget.product,
+        'quantity': quantity,
+        'price': widget.product['price'],
+      });
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${widget.product['name']} added to cart!'),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          product['name'],
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
+          widget.product['name'],
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Color(0xFF00b298),
+        backgroundColor: const Color(0xFF00b298),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart, color: Colors.black),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ShoppingCartPage(cartItems: widget.cartItems),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Product Image
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
-                  product['imageUrl'], // Use Image.network for online images
+                  widget.product['imageUrl'],
                   height: 200,
                   width: 200,
                   fit: BoxFit.cover,
@@ -36,22 +87,19 @@ class ProductDescriptionPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            // Product Name
             Text(
-              product['name'],
+              widget.product['name'],
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 10),
-            // Product Description
             Text(
-              product['description'],
+              widget.product['description'],
               style: const TextStyle(fontSize: 16, color: Colors.grey),
             ),
             const SizedBox(height: 20),
-            // Product Rating and Price
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -59,13 +107,13 @@ class ProductDescriptionPage extends StatelessWidget {
                   children: [
                     const Icon(Icons.star, color: Colors.yellow, size: 20),
                     Text(
-                      product['rating'].toString(),
+                      widget.product['rating'].toString(),
                       style: const TextStyle(fontSize: 16),
                     ),
                   ],
                 ),
                 Text(
-                  "EGP ${product['price']}",
+                  "EGP ${widget.product['price']}",
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -73,32 +121,61 @@ class ProductDescriptionPage extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Quantity:",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.remove),
+                      onPressed: () {
+                        if (quantity > 1) {
+                          setState(() {
+                            quantity--;
+                          });
+                        }
+                      },
+                    ),
+                    Text(
+                      '$quantity',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () {
+                        setState(() {
+                          quantity++;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
             const Spacer(),
-            // Add to Cart Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF00b298),
+                  backgroundColor: const Color(0xFF00b298),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {
-                  // Add to Cart Logic Here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('${product['name']} added to cart!'),
-                    ),
-                  );
-                },
+                onPressed: addToCart,
                 child: const Text(
                   "Add to Cart",
                   style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
