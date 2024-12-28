@@ -81,6 +81,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.logout, color: Colors.black),
+          // Menu actionicon: const Icon(Icons.logout, color: Colors.black),
+          onPressed: () async {
+            await FirebaseAuth.instance.signOut();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const SignInScreen()),
+            );
+          },
+        ),
         backgroundColor: Color(0xFF00b298),
         elevation: 0,
         title: const Text(
@@ -90,17 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black),
-            // Menu actionicon: const Icon(Icons.logout, color: Colors.black),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const SignInScreen()),
-              );
-            },
-          ),
           IconButton(
             icon: const Icon(Icons.shopping_cart, color: Colors.black),
             onPressed: () {

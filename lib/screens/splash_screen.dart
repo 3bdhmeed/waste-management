@@ -74,13 +74,30 @@ class _SplashScreenState extends State<SplashScreen>
             ),
             const SizedBox(height: 20),
             // App title
-            const Text(
-              'RecycLink',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+            Stack(
+              children: [
+                // Text with a white border
+                Text(
+                  'RecycLink',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 3.0 // Adjust for desired border thickness
+                      ..color = Colors.white, // Border color
+                  ),
+                ),
+                // Text with solid fill
+                Text(
+                  'RecycLink',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF005570), // Text fill color
+                  ),
+                ),
+              ],
             ),
           ],
         ),
