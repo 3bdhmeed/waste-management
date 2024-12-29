@@ -1,4 +1,4 @@
-import 'dart:convert'; // For decoding JSON response
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -12,8 +12,8 @@ class ScanScreen extends StatefulWidget {
 class _ScanScreenState extends State<ScanScreen> {
   CameraController? _cameraController;
   List<CameraDescription>? cameras;
-  bool isLoading = false; // Show loading indicator
-  String? detectionResult; // For the detected label
+  bool isLoading = false;      // Show loading indicator
+  String? detectionResult;     // For the detected label
   List<double>? probabilities; // For the probabilities of each class
 
   // Labels for the detected classes
@@ -55,6 +55,7 @@ class _ScanScreenState extends State<ScanScreen> {
     "trash"
   ];
 
+  // When the widget is created, it initializes the camera.
   @override
   void initState() {
     super.initState();
@@ -65,8 +66,9 @@ class _ScanScreenState extends State<ScanScreen> {
     try {
       cameras = await availableCameras();
       if (cameras != null && cameras!.isNotEmpty) {
+        // The first available camera (cameras![0]) is used to set up a CameraController with high resolution (ResolutionPreset.high).
         _cameraController = CameraController(cameras![0], ResolutionPreset.high);
-        await _cameraController!.initialize();
+        await _cameraController!.initialize(); //method prepares the camera for preview.
         setState(() {});
       }
     } catch (e) {
@@ -75,6 +77,7 @@ class _ScanScreenState extends State<ScanScreen> {
   }
 
   Future<void> captureAndDetect() async {
+    // Ensures the camera is ready
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
       return;
     }
@@ -96,9 +99,8 @@ class _ScanScreenState extends State<ScanScreen> {
 
         // Safely convert probabilities to List<double>
         probabilities = (result["probabilities"] as List<dynamic>)
-            .map((e) => e.toDouble())
-            .toList()
-            .cast<double>();
+            .map((e) => double.tryParse(e.toString()) ?? 0.0)
+            .toList();
       });
     } catch (e) {
       setState(() {
@@ -109,7 +111,7 @@ class _ScanScreenState extends State<ScanScreen> {
   }
 
   Future<Map<String, dynamic>> sendToServer(File imageFile) async {
-    final url = Uri.parse("http://192.168.0.101:5000/predict"); // Your Flask API URL
+    final url = Uri.parse("http://192.168.0.102:5000/predict"); // Your Flask API URL
     final request = http.MultipartRequest("POST", url);
     request.files.add(await http.MultipartFile.fromPath("image", imageFile.path));
 
