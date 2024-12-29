@@ -2,7 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+// The AuthService class encapsulates authentication and user-related operations.
 class AuthService {
+
+  //  Handles user login using an email and password.
+  // Returns a Future<bool> indicating whether the login was successful (true) or not (false)
+
   Future<bool> signInUser(String email, String password, BuildContext context) async {
     UserCredential? credentials;
 
@@ -11,6 +16,8 @@ class AuthService {
         email: email,
         password: password,
       );
+      // On success, returns a UserCredential object containing the authenticated user's information.
+
     } on FirebaseAuthException catch (ex) {
       // Handle specific FirebaseAuth exceptions with user-friendly messages
       ScaffoldMessenger.of(context).showSnackBar(
@@ -26,17 +33,22 @@ class AuthService {
       return false;
     }
 
+    //  Retrieve the Authenticated User
+    // credentials?.user: Extracts the user from the returned UserCredential
+    // FirebaseAuth.instance.currentUser: Retrieves the currently signed-in user, even after the initial login.
     User? user = credentials?.user ?? FirebaseAuth.instance.currentUser;
 
     if (user != null) {
       try {
+        //  Fetch User Data from Firestore
+        // Access user data directly
+        // collection is a group of documents
         DocumentSnapshot userData = await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
             .get();
 
         if (userData.exists) {
-          // Access user data directly
           Map<String, dynamic>? data = userData.data() as Map<String, dynamic>?;
           if (data != null) {
             String name = data['name'] ?? "No name";

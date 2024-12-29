@@ -41,7 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
           MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
       } else {
-        // If login fails, show error message (handled inside AuthService)
+        // handled inside AuthService
       }
 
       setState(() {
@@ -60,8 +60,8 @@ class _SignInScreenState extends State<SignInScreen> {
         // Background Image
         Positioned.fill(
           child: Image.asset(
-            'assets/images/Untitled-1.png', // Replace with the path to your image
-            fit: BoxFit.cover, // To make the image cover the whole screen
+            'assets/images/Untitled-1.png',
+            fit: BoxFit.cover,
           ),
         ),
 
@@ -69,7 +69,7 @@ class _SignInScreenState extends State<SignInScreen> {
         Positioned.fill(
           child: BackdropFilter(
             filter: ImageFilter.blur(
-                sigmaX: 2.0, sigmaY: 2.0), // Adjust the blur strength here
+                sigmaX: 2.0, sigmaY: 2.0),
             // child: Container(
             //   color: const Color.fromARGB(255, 132, 255, 163).withOpacity(0.4), // Optional: adds a slight dark overlay
             // ),
