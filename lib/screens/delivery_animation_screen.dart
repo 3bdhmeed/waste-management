@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import 'home_screen.dart';
+
 class DeliveryAnimationScreen extends StatelessWidget {
   const DeliveryAnimationScreen({super.key});
 
@@ -82,7 +84,11 @@ class DeliveryAnimationScreen extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.close, color: Colors.white),
               onPressed: () {
-                Navigator.pop(context); // Close the screen
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  (Route<dynamic> route) => false,
+                );
               },
             ),
           ),

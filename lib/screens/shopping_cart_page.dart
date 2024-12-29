@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'delivery_animation_screen.dart';
+import 'package:waste_management/screens/checkoutscreen.dart';
 
 void main() {
   runApp(const ShoppingCartApp());
@@ -280,8 +279,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const DeliveryAnimationScreen()),
+                                builder: (context) => const CheckoutScreen()),
                           );
                         },
                   child: Text(
