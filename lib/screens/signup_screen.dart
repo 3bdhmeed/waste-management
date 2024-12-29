@@ -119,167 +119,180 @@ class _SignUpScreenState extends State<SignUpScreen> {
           // Content on top of the blurred background
           Center(
             child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.05,
-                    vertical: screenHeight * 0.05),
-                child: Container(
-                  width: screenWidth * 1.0,
-                  height: screenHeight * 0.75,
-                  padding: EdgeInsets.all(screenWidth * 0.05),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.green.shade400, Colors.green.shade700],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(30.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        blurRadius: 15,
-                        spreadRadius: 2,
-                        offset: Offset(0, 10),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.05,
+                        vertical: screenHeight * 0.05),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight:
+                            constraints.maxHeight * 0.95, // Avoid overflow
                       ),
-                    ],
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Welcome!",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
+                      child: Container(
+                        width: screenWidth * 1.0,
+                        padding: EdgeInsets.all(screenWidth * 0.05),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.green.shade400,
+                              Colors.green.shade700
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text(
-                          "SIGN UP",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        _buildTextFormField(
-                            "Full Name", _userNameTextController, false),
-                        const SizedBox(height: 15),
-                        _buildTextFormField(
-                            "Email", _emailTextController, false),
-                        const SizedBox(height: 15),
-                        _buildTextFormField(
-                            "Password", _passwordTextController, true),
-                        const SizedBox(height: 15),
-                        _buildTextFormField(
-                          "Re-Enter Password",
-                          _rePasswordTextController,
-                          true,
-                        ),
-                        const SizedBox(height: 20),
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "User Type",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                            ),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Checkbox(
-                              value: isCitizen,
-                              onChanged: (value) {
-                                setState(() {
-                                  isCitizen = value!;
-                                  isCompany = false;
-                                });
-                              },
-                              activeColor: Colors.white,
-                              checkColor: Colors.green,
-                            ),
-                            const Text(
-                              "Citizen",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Checkbox(
-                              value: isCompany,
-                              onChanged: (value) {
-                                setState(() {
-                                  isCompany = value!;
-                                  isCitizen = false;
-                                });
-                              },
-                              activeColor: Colors.white,
-                              checkColor: Colors.green,
-                            ),
-                            const Text(
-                              "Company",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                              ),
+                          borderRadius: BorderRadius.circular(30.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              blurRadius: 15,
+                              spreadRadius: 2,
+                              offset: Offset(0, 10),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: _isLoading ? null : _signUp,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.green.shade400,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
-                          ),
-                          child: _isLoading
-                              ? const CircularProgressIndicator(
-                                  color: Colors.green)
-                              : const Text("Sign Up"),
-                        ),
-                        const SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Already have an account?",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignInScreen()),
-                                );
-                              },
-                              child: const Text(
-                                " Login",
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Welcome!",
                                 style: TextStyle(
                                   color: Colors.white,
+                                  fontSize: 40,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 20),
+                              const Text(
+                                "SIGN UP",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              _buildTextFormField(
+                                  "Full Name", _userNameTextController, false),
+                              const SizedBox(height: 15),
+                              _buildTextFormField(
+                                  "Email", _emailTextController, false),
+                              const SizedBox(height: 15),
+                              _buildTextFormField(
+                                  "Password", _passwordTextController, true),
+                              const SizedBox(height: 15),
+                              _buildTextFormField(
+                                "Re-Enter Password",
+                                _rePasswordTextController,
+                                true,
+                              ),
+                              const SizedBox(height: 20),
+                              const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "User Type",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Checkbox(
+                                    value: isCitizen,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isCitizen = value!;
+                                        isCompany = false;
+                                      });
+                                    },
+                                    activeColor: Colors.white,
+                                    checkColor: Colors.green,
+                                  ),
+                                  const Text(
+                                    "Citizen",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Checkbox(
+                                    value: isCompany,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isCompany = value!;
+                                        isCitizen = false;
+                                      });
+                                    },
+                                    activeColor: Colors.white,
+                                    checkColor: Colors.green,
+                                  ),
+                                  const Text(
+                                    "Company",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              ElevatedButton(
+                                onPressed: _isLoading ? null : _signUp,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.green.shade400,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0),
+                                ),
+                                child: _isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.green)
+                                    : const Text("Sign Up"),
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Already have an account?",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SignInScreen()),
+                                      );
+                                    },
+                                    child: const Text(
+                                      " Login",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
             ),
           ),

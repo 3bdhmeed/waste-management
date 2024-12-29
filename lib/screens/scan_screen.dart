@@ -65,7 +65,8 @@ class _ScanScreenState extends State<ScanScreen> {
     try {
       cameras = await availableCameras();
       if (cameras != null && cameras!.isNotEmpty) {
-        _cameraController = CameraController(cameras![0], ResolutionPreset.high);
+        _cameraController =
+            CameraController(cameras![0], ResolutionPreset.high);
         await _cameraController!.initialize();
         setState(() {});
       }
@@ -109,9 +110,11 @@ class _ScanScreenState extends State<ScanScreen> {
   }
 
   Future<Map<String, dynamic>> sendToServer(File imageFile) async {
-    final url = Uri.parse("http://192.168.0.101:5000/predict"); // Your Flask API URL
+    final url =
+        Uri.parse("http://192.168.0.101:5000/predict"); // Your Flask API URL
     final request = http.MultipartRequest("POST", url);
-    request.files.add(await http.MultipartFile.fromPath("image", imageFile.path));
+    request.files
+        .add(await http.MultipartFile.fromPath("image", imageFile.path));
 
     try {
       final response = await request.send();
@@ -178,7 +181,8 @@ class _ScanScreenState extends State<ScanScreen> {
                   children: [
                     const Text(
                       "Probabilities:",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     ...probabilities!.asMap().entries.map((entry) {
@@ -194,8 +198,7 @@ class _ScanScreenState extends State<ScanScreen> {
               ),
             ),
           // Loading Indicator
-          if (isLoading)
-            const Center(child: CircularProgressIndicator()),
+          if (isLoading) const Center(child: CircularProgressIndicator()),
           // Capture Button
           Positioned(
             bottom: 30,
