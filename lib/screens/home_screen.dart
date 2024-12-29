@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'location_screen.dart';
 import 'login_screen.dart';
 import 'scan_screen.dart';
 import 'product_description_page.dart'; // Import your description page
@@ -329,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Retrieve the user's role from Firebase using the user's ID
                 DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
                     .collection('users')
-                    .doc(currentUser.uid)  // Use the current user's UID
+                    .doc(currentUser.uid) // Use the current user's UID
                     .get();
 
                 // Get the role (citizen or company)
