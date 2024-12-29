@@ -5,6 +5,9 @@ import 'login_screen.dart';
 import 'scan_screen.dart';
 import 'product_description_page.dart'; // Import your description page
 import 'shopping_cart_page.dart'; // Import your shopping cart
+import 'user_location_screen.dart';
+import 'company_location_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -310,17 +313,57 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         selectedItemColor: Color(0xFF00b298),
         unselectedItemColor: Colors.grey,
-        onTap: (index) {
+        onTap: (index) async {
           if (index == 1) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ScanScreen()),
             );
           } else if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MapScreen()),
-            );
+            // Check the user's role before navigating
+            try {
+              // Get the current user
+              User? currentUser = FirebaseAuth.instance.currentUser;
+
+              if (currentUser != null) {
+                // Retrieve the user's role from Firebase using the user's ID
+                DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(currentUser.uid)  // Use the current user's UID
+                    .get();
+
+                // Get the role (citizen or company)
+                String role = userSnapshot['userType'];
+
+                // Navigate based on the role
+                if (role == 'Citizen') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MapScreenUser()),
+                  );
+                } else if (role == 'Company') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MapScreenCompany()),
+                  );
+                } else {
+                  // Handle unknown role
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Unknown role: $role')),
+                  );
+                }
+              } else {
+                // If no user is logged in
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('No user is logged in')),
+                );
+              }
+            } catch (e) {
+              // Handle errors (e.g., error fetching user role)
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Error fetching user role: $e')),
+              );
+            }
           }
         },
       ),
