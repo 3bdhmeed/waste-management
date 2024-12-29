@@ -43,6 +43,7 @@ flutter:
     - assets/images/news1.png
     - assets/images/news2.png
     - assets/NodesPlaces_DS.xlsx
+    - assets/NodesPlaces_DS(4).xlsx
     - assets/models/smart_waste_sorting_model.tflite
     - assets/images/Layer2.png
     - assets/images/Untitled-1.png
@@ -53,3 +54,4 @@ flutter:
     - assets/images/Glass.jpg
     - assets/images/Clothes.png
     - assets/animations/delivery_moto.json
+    - assets/images/recycle_bin.png
