@@ -38,6 +38,11 @@ class _SignInScreenState extends State<SignInScreen> {
           context,
           MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
+<<<<<<< HEAD
+=======
+      } else {
+        // handled inside AuthService
+>>>>>>> 01ea8a610485dcde613574302c420c3855bcc4a8
       }
 
       setState(() {
@@ -51,6 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+<<<<<<< HEAD
       body: Stack(
         children: [
           // Background Image
@@ -59,13 +65,32 @@ class _SignInScreenState extends State<SignInScreen> {
               'assets/images/Untitled-1.png',
               fit: BoxFit.cover,
             ),
+=======
+      body: Stack(children: [
+        // Background Image
+        Positioned.fill(
+          child: Image.asset(
+            'assets/images/Untitled-1.png',
+            fit: BoxFit.cover,
+>>>>>>> 01ea8a610485dcde613574302c420c3855bcc4a8
           ),
 
+<<<<<<< HEAD
           // Backdrop Filter
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             ),
+=======
+        // Backdrop Filter for blur effect
+        Positioned.fill(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+                sigmaX: 2.0, sigmaY: 2.0),
+            // child: Container(
+            //   color: const Color.fromARGB(255, 132, 255, 163).withOpacity(0.4), // Optional: adds a slight dark overlay
+            // ),
+>>>>>>> 01ea8a610485dcde613574302c420c3855bcc4a8
           ),
 
           // Content

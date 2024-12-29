@@ -1,4 +1,4 @@
-import 'dart:convert'; // For decoding JSON response
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -55,6 +55,7 @@ class _ScanScreenState extends State<ScanScreen> {
     "trash"
   ];
 
+  // When the widget is created, it initializes the camera.
   @override
   void initState() {
     super.initState();
@@ -76,6 +77,7 @@ class _ScanScreenState extends State<ScanScreen> {
   }
 
   Future<void> captureAndDetect() async {
+    // Ensures the camera is ready
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
       return;
     }
@@ -97,9 +99,8 @@ class _ScanScreenState extends State<ScanScreen> {
 
         // Safely convert probabilities to List<double>
         probabilities = (result["probabilities"] as List<dynamic>)
-            .map((e) => e.toDouble())
-            .toList()
-            .cast<double>();
+            .map((e) => double.tryParse(e.toString()) ?? 0.0)
+            .toList();
       });
     } catch (e) {
       setState(() {
