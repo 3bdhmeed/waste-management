@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
     )..repeat(); // Repeat the animation
 
     // Check authentication state after 3 seconds
-    Future.delayed(const Duration(seconds: 3), _checkAuthState);
+    Future.delayed(const Duration(seconds: 4), _checkAuthState);
   }
 
   Future<void> _checkAuthState() async {

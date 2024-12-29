@@ -113,7 +113,7 @@ class _ProductDescriptionPageState extends State<ProductDescriptionPage> {
                   ],
                 ),
                 Text(
-                  "EGP ${widget.product['price']}",
+                  "EGP ${widget.product['price']}k",
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

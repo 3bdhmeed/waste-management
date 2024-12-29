@@ -249,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "EGP ${product['price']}",
+                                      "EGP ${product['price']}k",
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),

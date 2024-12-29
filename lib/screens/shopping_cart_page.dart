@@ -141,7 +141,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       // Ensure that price and quantity are correctly cast to numeric types
       total += (details['price'] as double) * (details['quantity'] as int);
     });
-    return total;
+    return total * 1000;
   }
 
   @override
@@ -215,7 +215,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      'EGP $price each ton',
+                                      'EGP ${price}k each ton',
                                       style:
                                           const TextStyle(color: Colors.grey),
                                     ),
